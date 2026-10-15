@@ -10,7 +10,7 @@ Phase 0: foundations. See `docs/` for the design and the backlog.
 
 ## Stack
 
-- .NET modular monolith (ASP.NET Core), one deployable host
+- .NET modular monolithic (ASP.NET Core), one deployable host
 - PostgreSQL, one shared database with a Client id on every record and row-level security
 - Azure (Container Apps, managed PostgreSQL), infrastructure as code
 - GitHub Actions for CI and deployment
