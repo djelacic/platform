@@ -1,0 +1,33 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+*.log
+
+## IDEs
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+## Node (web apps)
+node_modules/
+dist/
+
+## Secrets and local settings
+.env
+*.pfx
+appsettings.Local.json
+appsettings.*.local.json
+CLAUDE.local.md
+
+## Infrastructure state
+.terraform/
+*.tfstate
+*.tfstate.*
+
+## OS
+.DS_Store
+Thumbs.db

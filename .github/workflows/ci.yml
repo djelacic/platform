@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect solution
+        id: sln
+        run: |
+          if ls *.sln *.slnx >/dev/null 2>&1; then echo "found=true" >> "$GITHUB_OUTPUT"; else echo "found=false" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-dotnet@v4
+        if: steps.sln.outputs.found == 'true'
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Build
+        if: steps.sln.outputs.found == 'true'
+        run: dotnet build --nologo -warnaserror
+
+      - name: Test
+        if: steps.sln.outputs.found == 'true'
+        run: dotnet test --no-build --nologo
+
+      - name: No solution yet
+        if: steps.sln.outputs.found != 'true'
+        run: echo "No solution file yet. Build and test steps are skipped."
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Scan for secrets
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
