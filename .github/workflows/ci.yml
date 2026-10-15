@@ -19,7 +19,7 @@ jobs:
         run: |
           if ls *.sln *.slnx >/dev/null 2>&1; then echo "found=true" >> "$GITHUB_OUTPUT"; else echo "found=false" >> "$GITHUB_OUTPUT"; fi
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         if: steps.sln.outputs.found == 'true'
         with:
           dotnet-version: 9.0.x
